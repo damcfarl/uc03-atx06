@@ -1,0 +1,32 @@
+---
+
+  - name: delete template
+    hosts: mso1
+    connection: local
+    gather_facts: no
+
+    vars_files:
+    - external_vars.yml
+
+    vars:
+      status: absent
+
+    tasks:
+    - name: delete template
+      delegate_to: localhost 
+      cisco.mso.mso_schema_template:
+        host: "{{ host }}"
+        username: "{{ user }}"
+        tenant: "{{ tenant }}"
+        password: "{{ pass }}"
+        schema: "{{ schema }}"
+        template: "{{ template }}"
+        state: "{{ status }}"
+        validate_certs: no
+
+
+#
+# Usage:  ansible-playbook -i hosts <file_name>.yml   -vvv
+#
+#  docs.ansible.com is essential to make sure you got the modules right
+# variables are defined in external_varsATX.yml
